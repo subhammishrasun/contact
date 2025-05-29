@@ -13,7 +13,7 @@ app.use(cors());
 app.use(bodyParser.json());
 
 // MongoDB connection
-const mongoURI = process.env.MONGODB_URI || 'mongodb+srv://recruitwaydevelopers:recruity9854@cluster0.d0l0hzg.mongodb.net/';
+const mongoURI = process.env.MONGODB_URI || 'mongodb+srv://recruitwaydevelopers:recruity9854@cluster0.d0l0hzg.mongodb.net/Contact';
 
 mongoose.connect(mongoURI, {
   useNewUrlParser: true,
