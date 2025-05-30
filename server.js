@@ -14,13 +14,10 @@ app.use(bodyParser.json());
 
 // MongoDB connection
 const mongoURI = process.env.MONGODB_URI || 'mongodb+srv://recruitwaydevelopers:recruity9854@cluster0.d0l0hzg.mongodb.net/Contact';
+mongoose.connect(mongoURI)
+  .then(() => console.log('MongoDB connected'))
+  .catch((err) => console.log('MongoDB connection error:', err));
 
-mongoose.connect(mongoURI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-.then(() => console.log('MongoDB connected'))
-.catch((err) => console.log('MongoDB connection error:', err));
 
 // Contact schema and model
 const contactSchema = new mongoose.Schema({
@@ -45,6 +42,19 @@ app.post('/api/contact', async (req, res) => {
   } catch (err) {
     console.error('Error saving contact:', err);
     res.status(500).json({ error: 'Failed to save contact request' });
+  }
+});
+
+app.get('/api/contacts', async (req, res) => {
+  try {
+    const contacts = await Contact.find().sort({ date: -1 }); // Newest first
+    res.status(200).json(contacts);
+  } catch (err) {
+    console.error('Error fetching contacts:', err);
+    res.status(500).json({ 
+      error: 'Failed to fetch contacts',
+      details: err.message 
+    });
   }
 });
 
