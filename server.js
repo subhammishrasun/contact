@@ -34,6 +34,18 @@ const contactSchema = new mongoose.Schema({
 const Contact = mongoose.model('Contact', contactSchema);
 
 // Routes
+app.get('/', async (req, res) => {
+  try {
+    res.status(200).json('successfully connected');
+  } catch (err) {
+    console.error('Error:', err);
+    res.status(500).json({ 
+      error: 'Failed to fetch contacts',
+      details: err.message 
+    });
+  }
+});
+
 app.post('/api/contact', async (req, res) => {
   try {
     const newContact = new Contact(req.body);
